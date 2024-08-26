@@ -58,8 +58,7 @@ jobs:
           changelog-file: changelog.md
           loaders: fabric
           game-versions: ${{ steps.properties.outputs.minecraft_version }}
-          version-resolver: exact
+          game-version-filter: min-major
 
           dependencies: |
             fabric-api | depends | *
-            owo-lib | depends | *

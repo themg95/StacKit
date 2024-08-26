@@ -1,6 +1,5 @@
 package dev.mg95.stackit;
 
-import io.wispforest.owo.config.Option;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.minecraft.component.DataComponentTypes;
@@ -11,7 +10,7 @@ import java.util.Map;
 import static net.minecraft.item.Items.*;
 
 public class StacKit implements ModInitializer {
-    public static final dev.mg95.stackit.ModConfig CONFIG = dev.mg95.stackit.ModConfig.createAndLoad();
+    public StackItConfig Config = new StackItConfig();
     public static final Map<String, Item[]> itemsMap = Map.ofEntries(
             Map.entry("potions", new Item[]{POTION}),
             Map.entry("splashPotions", new Item[]{SPLASH_POTION}),
@@ -34,15 +33,16 @@ public class StacKit implements ModInitializer {
     @Override
     public void onInitialize() {
         DefaultItemComponentEvents.MODIFY.register(context -> {
-            var options = CONFIG.allOptions().values();
-            for (Option option : options) {
-                var key = option.key().path()[0];
+            var fields = Config.getClass().getFields();
+            for (var field : fields) {
+                var key = field.getName();
 
                 try {
-                    var field = ((dev.mg95.stackit.ModConfig.ItemCategory) CONFIG.getClass().getDeclaredField(key).get(CONFIG));
-                    if (!field.enabled()) return;
+                    field.setAccessible(true);
+                    var data = (StackItConfig.ItemCategory) field.get(Config);
+                    if (!data.enabled) return;
 
-                    var stackSize = field.stackSize();
+                    var stackSize = data.stackSize;
 
                     var items = itemsMap.get(key);
                     for (var item : items) {
@@ -50,7 +50,7 @@ public class StacKit implements ModInitializer {
                             builder.add(DataComponentTypes.MAX_STACK_SIZE, stackSize);
                         });
                     }
-                } catch (NoSuchFieldException | IllegalAccessException e) {
+                } catch (IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
             }

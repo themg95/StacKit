@@ -1,2 +1,2 @@
-# Stackit 1.0
-The first release!
+# Stackit 1.1
+- Replaced owo-lib with :3Lib

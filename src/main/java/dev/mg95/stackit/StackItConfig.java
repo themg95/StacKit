@@ -1,65 +1,68 @@
 package dev.mg95.stackit;
 
-import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Nest;
-import net.minecraft.item.Item;
+import dev.mg95.colon3lib.config.Category;
+import dev.mg95.colon3lib.config.Config;
+import dev.mg95.colon3lib.config.Option;
 
-import static net.minecraft.item.Items.*;
-
-@Config(name = "stackit-config", wrapperName = "ModConfig")
-public class ConfigModel {
-    @Nest
+public class StackItConfig extends Config {
+    @Category
     public ItemCategory potions = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory splashPotions = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory soups = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory enchantedBooks = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory buckets = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory boats = new ItemCategory(true, 64);
 
-    @Nest
+    @Category
     public ItemCategory minecarts = new ItemCategory(true, 64);
 
-    @Nest
+    @Category
     public ItemCategory beds = new ItemCategory(true, 64);
 
-    @Nest
+    @Category
     public ItemCategory discs = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory goatHorns = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory patterns = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory saddles = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory horseArmor = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory cakes = new ItemCategory(true, 16);
 
-    @Nest
+    @Category
     public ItemCategory totems = new ItemCategory(true, 16);
 
-    public static class ItemCategory {
+    public static class ItemCategory extends Config {
+        @Option
         public boolean enabled;
+        @Option
         public int stackSize;
 
         public ItemCategory(boolean enabled, int stackSize) {
             this.enabled = enabled;
             this.stackSize = stackSize;
         }
+    }
+
+    public StackItConfig() {
+        init(this, "stackit");
     }
 }
