@@ -1,2 +1,3 @@
-# Stackit 1.1
-- Replaced owo-lib with :3Lib
+# Stackit 1.2
+- Fixed an exploit with anvils (Thanks [u32](https://github.com/unsigned-32-bit-integer)!)
+- Small backend changes
